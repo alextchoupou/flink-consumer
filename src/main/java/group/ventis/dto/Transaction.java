@@ -1,7 +1,13 @@
 package group.ventis.dto;
 
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.sql.Timestamp;
 
+@Data
+@NoArgsConstructor
 public class Transaction {
 
     private String transactionId;
@@ -16,4 +22,5 @@ public class Transaction {
     private String customerId;
     private Timestamp transactionDate;
     private String paymentMethod;
+
 }
