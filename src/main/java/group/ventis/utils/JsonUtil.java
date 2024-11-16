@@ -1,8 +1,9 @@
 package group.ventis.utils;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import group.ventis.dto.Transaction;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.core.JsonProcessingException;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonUtil {
     private static final ObjectMapper objectMapper = new ObjectMapper();
