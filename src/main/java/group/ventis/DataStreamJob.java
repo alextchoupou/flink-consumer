@@ -35,7 +35,7 @@ public class DataStreamJob {
 
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
-		String topic = "financial_transaction";
+		String topic = "financial_operation";
 
 		KafkaSource<Transaction> kafkaSource = KafkaSource.<Transaction>builder()
 				.setBootstrapServers("broker:29092")
@@ -49,6 +49,8 @@ public class DataStreamJob {
 				WatermarkStrategy.noWatermarks(), "kafka source");
 
 		transactionDataStream.print("Transaction : ");
+
+		/*
 
 		JdbcConnectionOptions jdbcConnectionOptions = new JdbcConnectionOptions.JdbcConnectionOptionsBuilder()
 				.withUrl(JDBC_URL)
@@ -237,6 +239,7 @@ public class DataStreamJob {
 							requestIndexer.add(indexRequest);
 						}).build()
 		).name("Elasticsearch Sink: Insert data into transactions index");
+		*/
 
 		env.enableCheckpointing(5000);
 		env.execute("Real time Flink Job");
