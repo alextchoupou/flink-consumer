@@ -3,9 +3,13 @@ package group.ventis.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.sql.Timestamp;
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Data
 @NoArgsConstructor
@@ -24,60 +28,114 @@ public class Transaction {
 //    private Timestamp transactionDate;
 //    private String paymentMethod;
 
-    private String pk;
-    private Date cdate;
+    @JsonProperty("pk")
+    private long pk;
+    @JsonProperty("cdate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private Timestamp cdate;
+    @JsonProperty("accountnumber")
+    private String accountnumber;
+    @JsonProperty("accountcode")
     private String accountcode;
-    private String	accountpk;
+    @JsonProperty("accountpk")
+    private String accountpk;
+    @JsonProperty("closed")
     private boolean closed;
+    @JsonProperty("code")
     private String code;
+    @JsonProperty("creditamount")
     private double creditamount;
+    @JsonProperty("currencycode")
     private String currencycode;
-    private byte currencypk;
+    @JsonProperty("currencypk")
+    private int currencypk;
+    @JsonProperty("debitamount")
     private double debitamount;
-    private boolean differed;
-    private String  differedcondition;
-    private String extreference;
-    private byte filtrereport;
+    @JsonProperty("filtrereport")
+    private boolean filtrereport;
+    @JsonProperty("fxrate")
     private byte fxrate;
-    private byte  globalreference;
+    @JsonProperty("grossamount")
     private double grossamount;
+    @JsonProperty("grossamountacccur")
     private double grossamountacccur;
+    @JsonProperty("lockoperationreference")
     private String lockoperationreference;
+    @JsonProperty("netamount")
     private double netamount;
+    @JsonProperty("netamountacccur")
     private double netamountacccur;
+    @JsonProperty("opeinfo")
     private String opeinfo;
+    @JsonProperty("operationtypecode")
     private String  operationtypecode;
-    private int operationtypepk;
+    @JsonProperty("operationtypepk")
+    private String operationtypepk;
+    @JsonProperty("originopecode")
     private String originopecode;
+    @JsonProperty("originopepk")
     private String originopepk;
+    @JsonProperty("originopetype")
     private String originopetype;
-    private String paymentmeanref;
+    @JsonProperty("processed")
     private boolean processed;
+    @JsonProperty("reference")
     private String reference;
+    @JsonProperty("relatedoperation")
     private String relatedoperation;
-    private byte reservationreference;
+    @JsonProperty("reservationreference")
+    private String reservationreference;
+    @JsonProperty("reversed")
     private boolean reversed;
+    @JsonProperty("reversedfinancialopecode")
     private String reversedfinancialopecode;
-    private int reversedfinancialopepk;
+    @JsonProperty("reversedfinancialopepk")
+    private String reversedfinancialopepk;
+    @JsonProperty("sign")
     private String sign;
+    @JsonProperty("totalcomission")
     private long totalcomission;
+    @JsonProperty("totalcommissionacccur")
     private long totalcommissionacccur;
-    private byte totalfracccur;
-    private byte totalfiscalretention;
-    private byte totalstamp;
-    private byte totaltaf;
-    private int totalvat;
+    @JsonProperty("totalfracccur")
+    private long totalfracccur;
+    @JsonProperty("totalfiscalretention")
+    private long totalfiscalretention;
+    @JsonProperty("totalstamp")
+    private long totalstamp;
+    @JsonProperty("totaltaf")
+    private long totaltaf;
+    @JsonProperty("totalvat")
+    private long totalvat;
+    @JsonProperty("totalvatacccur")
     private long totalvatacccur;
-    private Date tradedate;
+    @JsonProperty("tradedate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private Timestamp tradedate;
+    @JsonProperty("unitcode")
     private String unitcode;
-    private byte unitpk;
+    @JsonProperty("unitpk")
+    private String unitpk;
+    @JsonProperty("udate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private Timestamp udate;
-    private Date valuedate;
-    private byte versionnum;
-    private int totalcss;
-    private int totalcssacccur;
+    @JsonProperty("valuedate")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private Timestamp valuedate;
+    @JsonProperty("versionnum")
+    private int versionnum;
+    @JsonProperty("totalcss")
+    private long totalcss;
+    @JsonProperty("totalcssacccur")
+    private long totalcssacccur;
+    @JsonProperty("mailsent")
     private boolean mailsent;
+    @JsonProperty("smssent")
     private boolean smssent;
+    @JsonProperty("whatsappsent")
     private boolean whatsappsent;
-    private boolean forc;
+    @JsonProperty("force")
+    private boolean force;
+    /*@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private Timestamp transactionDate;*/
 }

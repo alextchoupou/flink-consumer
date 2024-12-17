@@ -7,6 +7,8 @@ import org.apache.flink.shaded.jackson2.com.fasterxml.jackson.databind.ObjectMap
 
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class JSONValueDeserializationSchema implements DeserializationSchema<Transaction> {
 
@@ -14,7 +16,9 @@ public class JSONValueDeserializationSchema implements DeserializationSchema<Tra
 
     @Override
     public Transaction deserialize(byte[] bytes) throws IOException {
-        return objectMapper.readValue(bytes, Transaction.class);
+        Transaction transaction = objectMapper.readValue(bytes, Transaction.class);
+        // transaction.setTransactionDate(Timestamp.valueOf(LocalDateTime.now()));
+        return transaction;
     }
 
     @Override

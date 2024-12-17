@@ -20,8 +20,10 @@ import org.apache.flink.elasticsearch7.shaded.org.elasticsearch.client.Requests;
 import org.apache.flink.elasticsearch7.shaded.org.elasticsearch.common.xcontent.XContentType;
 import org.apache.flink.streaming.api.datastream.DataStream;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
 
 import java.sql.Date;
+import java.util.Properties;
 
 import static group.ventis.utils.JsonUtil.toJson;
 
@@ -37,6 +39,10 @@ public class DataStreamJob {
 
 		String topic = "financial_operation";
 
+		Properties properties = new Properties();
+		properties.setProperty("bootstrap.servers", "broker:29092");
+		properties.setProperty("group.id", "flink-group");
+
 		KafkaSource<Transaction> kafkaSource = KafkaSource.<Transaction>builder()
 				.setBootstrapServers("broker:29092")
 				.setTopics(topic)
@@ -47,6 +53,7 @@ public class DataStreamJob {
 
 		DataStream<Transaction> transactionDataStream = env.fromSource(kafkaSource,
 				WatermarkStrategy.noWatermarks(), "kafka source");
+
 
 		transactionDataStream.print("Transaction : ");
 
@@ -224,22 +231,24 @@ public class DataStreamJob {
 						executionOptions,
 						jdbcConnectionOptions
 				)).name("JDBC Sink: Insert data into sales_per_month table");
-
+		*/
 		transactionDataStream.sinkTo(
 				new Elasticsearch7SinkBuilder<Transaction>()
 						.setHosts(new HttpHost("elasticsearch", 9200, "http"))
+						.setConnectionUsername("elastic")
+						.setConnectionPassword("btracking")
 						.setBulkFlushMaxActions(1)
 						.setEmitter((transaction, runtimeContext, requestIndexer) -> {
 
 							String json = toJson(transaction);
 							IndexRequest indexRequest = Requests.indexRequest()
 									.index("transactions")
-									.id(transaction.getTransactionId())
+									.id(String.valueOf(transaction.getPk()))
 									.source(json, XContentType.JSON);
 							requestIndexer.add(indexRequest);
 						}).build()
 		).name("Elasticsearch Sink: Insert data into transactions index");
-		*/
+
 
 		env.enableCheckpointing(5000);
 		env.execute("Real time Flink Job");
