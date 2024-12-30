@@ -27,5 +27,10 @@ COPY --from=build /app/target/FlinkConsumer-1.0-SNAPSHOT.jar /shared/app.jar
 # Copy the Flink JAR
 ADD https://repo.maven.apache.org/maven2/org/apache/flink/flink-sql-connector-kafka/3.3.0-1.20/flink-sql-connector-kafka-3.3.0-1.20.jar /app/flink-dist.jar
 
+# Installer curl pour vérifier Elasticsearch et récupérer le certificat
+# RUN apt-get update && \
+#    apt-get install -y curl && \
+#    apt-get clean
+
 # Commnd to run the application with the Flink JAR
 # ENTRYPOINT ["java", "-cp", "/shared/app.jar:/app/flink-dist.jar", "group.ventis.DataStreamJob"]
